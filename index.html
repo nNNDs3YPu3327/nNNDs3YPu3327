@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="NoiseVLA: Adapting Pre-trained VLAs to Specific Tasks through Noise-Space Reinforcement learning">
+        content="noiseVLA: Generalizing Pre-trained VLA model to Unseen Tasks via Noise-Space Reinforcement Learning">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NoiseVLA Demo</title>
 
@@ -56,7 +56,7 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">NoiseVLA: Adapting Pre-trained VLAs to Specific Tasks through Noise-Space Reinforcement learning</h1>
+          <h1 class="title is-1 publication-title">noiseVLA: Generalizing Pre-trained VLA model to Unseen Tasks via Noise-Space Reinforcement Learning</h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">Anonymous Authors</span>
           </div>
@@ -96,16 +96,16 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Vision-Language-Action (VLA) models trained purely with imitation learning often overfit to demonstration data, becoming brittle under mild distribution shift and prone to error accumulation once execution deviates from expert trajectories.
+            Vision-Language-Action (VLA) models trained purely with  imitation learning often overfit to demonstration data, becoming brittle under mild distribution shift and prone to error accumulation once execution deviates from expert trajectories. 
             Existing adaptation methods, such as recollecting demonstrations for behavioral cloning(BC) or applying reinforcement learning(RL) directly to the entire VLA policy, are costly and slow to converge because they couple environment alignment with task generalization, forcing a large policy to simultaneously acquire environment-specific interaction priors and discover effective behaviors through exploration in its full action space.
           </p>
           <p>
             \textbf{We introduce noiseVLA}, a VLA model consisting of a vision-language backbone and an action expert trained with flow matching, which separates domain adaptation from task level improvement by encoding domain priors through lightweight imitation across multiple tasks and refining task behavior through RL in the latent noise space of action expert.
-            NoiseVLA addresses above coupling by first performing environment alignment through lightweight imitation over a small but diverse task set, allowing the policy to capture regularities in viewpoint, embodiment, and action patterns, and then enabling task generalization by freezing the VLA backbone and the flow matching action expert while applying GRPO only to a lightweight policy over latent noise inputs for unseen or harder tasks, thereby turning blind exploration in the original action space into guided search within a feasible subspace supported by the target environment.
+            noiseVLA addresses the above coupling by first performing environment alignment through Off-GAIL lightweight imitation over a small but diverse task set to capture regularities in viewpoint, embodiment, and action patterns, and then enabling task generalization by freezing the VLA backbone and the flow-matching action expert while applying GRPO only to a lightweight policy over latent noise inputs for unseen or harder tasks, thereby turning blind exploration in the original action space into guided search within a feasible subspace supported by the target environment and promoting generalization across similar real-world scenes.
           </p>
           <p>
-            Experiments on simulation and real world tasks demonstrate that noiseVLA consistently outperforms direct online fine-tuning and noise-space RL without environment alignment, yielding stronger initialization and better online adaptation. Our framework provides a simple and compute-efficient path for continually improving strong VLA policies with limited offline data and modest online interaction.
-            Code and Demo have be released.
+            Experiments on simulation and real-world tasks show that noiseVLA outperforms $\pi_{0.5}$ by \textbf{1.2} points on LIBERO and $\pi_{0}$ by \textbf{40.3} points on Meta-World in overall average success rate, while also exhibiting generalization to similar real-world scenes.
+            Code will be released and Project demo is live at \href{https://nnnds3ypu3327.github.io/nNNDs3YPu3327/}{demo website}.
           </p>
         </div>
       </div>
@@ -164,6 +164,15 @@
               <source src="./static/videos/0401-5.mp4" type="video/mp4">
             </video>
             <div class="video-caption">Put the cube into the drawer</div>
+          </div>
+        </div>
+
+        <div class="column is-one-fifth-desktop is-6-mobile">
+          <div class="video-container">
+            <video autoplay controls muted loop playsinline>
+              <source src="./static/videos/pumb_banana.mp4" type="video/mp4">
+            </video>
+            <div class="video-caption">Grasp banana with light interference</div>
           </div>
         </div>
 
