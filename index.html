@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="NoiseVLA: Adapting Pre-trained VLAs to Specific Tasks through Noise-Space Reinforcement learning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NoiseVLA Demo</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+
+  <style>
+    /* 视频容器样式：圆角、阴影、背景色 */
+    .video-container {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      background: #000; /* 黑色背景防止加载闪烁 */
+      margin-bottom: 10px;
+    }
+
+    .video-container video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .video-caption {
+      background-color: #f5f5f5;
+      padding: 8px;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #4a4a4a;
+    }
+
+    /* 调整列间距 */
+    .columns {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">NoiseVLA: Adapting Pre-trained VLAs to Specific Tasks through Noise-Space Reinforcement learning</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Anonymous Authors</span>
+          </div>
+
+          <!-- <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-youtube"></i></span>
+                  <span>Video</span>
+                </a>
+              </span>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Vision-Language-Action (VLA) models trained purely with imitation learning often overfit to demonstration data, becoming brittle under mild distribution shift and prone to error accumulation once execution deviates from expert trajectories.
+            Existing adaptation methods, such as recollecting demonstrations for behavioral cloning(BC) or applying reinforcement learning(RL) directly to the entire VLA policy, are costly and slow to converge because they couple environment alignment with task generalization, forcing a large policy to simultaneously acquire environment-specific interaction priors and discover effective behaviors through exploration in its full action space.
+          </p>
+          <p>
+            \textbf{We introduce noiseVLA}, a VLA model consisting of a vision-language backbone and an action expert trained with flow matching, which separates domain adaptation from task level improvement by encoding domain priors through lightweight imitation across multiple tasks and refining task behavior through RL in the latent noise space of action expert.
+            NoiseVLA addresses above coupling by first performing environment alignment through lightweight imitation over a small but diverse task set, allowing the policy to capture regularities in viewpoint, embodiment, and action patterns, and then enabling task generalization by freezing the VLA backbone and the flow matching action expert while applying GRPO only to a lightweight policy over latent noise inputs for unseen or harder tasks, thereby turning blind exploration in the original action space into guided search within a feasible subspace supported by the target environment.
+          </p>
+          <p>
+            Experiments on simulation and real world tasks demonstrate that noiseVLA consistently outperforms direct online fine-tuning and noise-space RL without environment alignment, yielding stronger initialization and better online adaptation. Our framework provides a simple and compute-efficient path for continually improving strong VLA policies with limited offline data and modest online interaction.
+            Code and Demo have be released.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Experimental Results</h2>
+
+      <h3 class="title is-5 has-text-centered">Robustness Evaluation & Generalization</h3>
+      <div class="columns is-centered is-mobile is-multiline is-variable is-1">
+
+        <div class="column is-one-fifth-desktop is-6-mobile">
+          <div class="video-container">
+            <video autoplay controls muted loop playsinline>
+              <source src="./static/videos/normal_banana.mp4" type="video/mp4">
+            </video>
+            <div class="video-caption">Grasp banana</div>
+          </div>
+        </div>
+
+        <div class="column is-one-fifth-desktop is-6-mobile">
+          <div class="video-container">
+            <video autoplay controls muted loop playsinline>
+              <source src="./static/videos/noise_banana.mp4" type="video/mp4">
+            </video>
+            <div class="video-caption">Grasp banana with noise</div>
+          </div>
+        </div>
+
+        <div class="column is-one-fifth-desktop is-6-mobile">
+          <div class="video-container">
+            <video autoplay controls muted loop playsinline>
+              <source src="./static/videos/muti_banana2.mp4" type="video/mp4">
+            </video>
+            <div class="video-caption">Repeatedly grasp banana</div>
+          </div>
+        </div>
+
+        <div class="column is-one-fifth-desktop is-6-mobile">
+          <div class="video-container">
+            <video autoplay controls muted loop playsinline>
+              <source src="./static/videos/pumb_banana.mp4" type="video/mp4">
+            </video>
+            <div class="video-caption">Grasp banana with light interference</div>
+          </div>
+        </div>
+
+        <div class="column is-one-fifth-desktop is-6-mobile">
+          <div class="video-container">
+            <video autoplay controls muted loop playsinline>
+              <source src="./static/videos/fold_clothes3.mp4" type="video/mp4">
+            </video>
+            <div class="video-caption">Fold clothes</div>
+          </div>
+        </div>
+
+        <div class="column is-one-fifth-desktop is-6-mobile">
+          <div class="video-container">
+            <video autoplay controls muted loop playsinline>
+              <source src="./static/videos/0401-1.mp4" type="video/mp4">
+            </video>
+            <div class="video-caption">Grasp banana 2</div>
+          </div>
+        </div>
+
+        <div class="column is-one-fifth-desktop is-6-mobile">
+          <div class="video-container">
+            <video autoplay controls muted loop playsinline>
+              <source src="./static/videos/0401-2.mp4" type="video/mp4">
+            </video>
+            <div class="video-caption">Stack cubes</div>
+          </div>
+        </div>
+
+        <div class="column is-one-fifth-desktop is-6-mobile">
+          <div class="video-container">
+            <video autoplay controls muted loop playsinline>
+              <source src="./static/videos/0401-3.mp4" type="video/mp4">
+            </video>
+            <div class="video-caption">Fold clothes 2</div>
+          </div>
+        </div>
+
+        <div class="column is-one-fifth-desktop is-6-mobile">
+          <div class="video-container">
+            <video autoplay controls muted loop playsinline>
+              <source src="./static/videos/0401-4.mp4" type="video/mp4">
+            </video>
+            <div class="video-caption">Fold clothes 3</div>
+          </div>
+        </div>
+
+        <div class="column is-one-fifth-desktop is-6-mobile">
+          <div class="video-container">
+            <video autoplay controls muted loop playsinline>
+              <source src="./static/videos/0401-5.mp4" type="video/mp4">
+            </video>
+            <div class="video-caption">Put the cube into the drawer</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+</body>
+</html>
